@@ -20,7 +20,7 @@ const cli = meow(`
       default: './out',
       alias: 'o'
     }
-}
+  }
 })
 
 const config = {
