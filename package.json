@@ -12,7 +12,8 @@
     "jest": "jest",
     "fix": "eslint . --fix",
     "lint": "eslint .",
-    "dev": "node dev-scripts/dev.js"
+    "devs": "node dev-scripts/dev.js",
+    "export": "NODE_PATH=. node exportStorage.js"
   },
   "config": {
     "electron-version": "2.0.7"
