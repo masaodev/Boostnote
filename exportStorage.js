@@ -1,6 +1,6 @@
 require('babel-register')({
-    presets: ['es2015']
-});
+  presets: ['es2015']
+})
 const exportStorage = require('./browser/main/lib/dataApi/exportStorage')
 const meow = require('meow')
 
@@ -14,29 +14,29 @@ const cli = meow(`
     --version       Output version number
     --help          Output usage information
 `, {
-        flags: {
-            output: {
-                type: 'string',
-                default: './out',
-                alias: 'o'
-            }
-        }
-    })
+  flags: {
+    output: {
+      type: 'string',
+      default: './out',
+      alias: 'o'
+    }
+}
+})
 
 const config = {
-    inputPath: cli.input[0] || null,
-    outputPath: cli.flags.output || null
+  inputPath: cli.input[0] || null,
+  outputPath: cli.flags.output || null
 }
 
 if (cli.flags.output === true) {
-    console.error(`Value for 'output' of type '[String]' required.`)
+  console.error(`Value for 'output' of type '[String]' required.`)
 } else {
-    const storageKey = "doesnotmatter"
-    const storageName = "neitherdoesthis"
+  const storageKey = 'doesnotmatter'
+  const storageName = 'neitherdoesthis'
 
-    const Storage = require('dom-storage')
-    global.localStorage = new Storage(null, { strict: true })
-    localStorage.setItem('storages', JSON.stringify([{ key: storageKey, name: storageName, path: config.inputPath, isOpen: true }]))
+  const Storage = require('dom-storage')
+  global.localStorage = new Storage(null, { strict: true })
+  localStorage.setItem('storages', JSON.stringify([{ key: storageKey, name: storageName, path: config.inputPath, isOpen: true }]))
 
-    exportStorage(storageKey, 'md', config.outputPath)
+  exportStorage(storageKey, 'md', config.outputPath)
 }
