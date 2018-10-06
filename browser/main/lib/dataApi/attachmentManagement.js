@@ -6,7 +6,7 @@ const mdurl = require('mdurl')
 const fse = require('fs-extra')
 const escapeStringRegexp = require('escape-string-regexp')
 const sander = require('sander')
-const i18n = require('browser/lib/i18n'
+const i18n = require('browser/lib/i18n')
 
 const STORAGE_FOLDER_PLACEHOLDER = ':storage'
 const DESTINATION_FOLDER = 'attachments'
