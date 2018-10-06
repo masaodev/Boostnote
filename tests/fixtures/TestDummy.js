@@ -62,6 +62,7 @@ function dummyNote (override = {}) {
   data.createdAt = faker.date.past()
   data.updatedAt = faker.date.recent()
   data.isStarred = false
+  data.isTrashed = false
   data.tags = faker.lorem.words().split(' ')
 
   if (override.key == null) data.key = keygen()

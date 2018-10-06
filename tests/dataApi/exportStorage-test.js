@@ -1,6 +1,5 @@
 const test = require('ava')
 const exportStorage = require('browser/main/lib/dataApi/exportStorage')
-import filenamify from 'filenamify'
 
 global.document = require('jsdom').jsdom('<body></body>')
 global.window = document.defaultView
@@ -35,7 +34,7 @@ test.serial('Export a storage', t => {
   return exportStorage(storageKey, 'md', exportDir)
     .then(() => {
       notes.forEach(note => {
-        const noteDir = path.join(exportDir, folderKeyToName[note.folder], `${filenamify(note.title, {replacement: '_'})}.md`)
+        const noteDir = path.join(exportDir, folderKeyToName[note.folder], `${note.title}.md`)
         if (note.type === 'MARKDOWN_NOTE') {
           t.true(fs.existsSync(noteDir))
           t.is(fs.readFileSync(noteDir, 'utf8'), note.content)
