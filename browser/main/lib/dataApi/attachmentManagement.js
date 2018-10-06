@@ -6,7 +6,7 @@ const mdurl = require('mdurl')
 const fse = require('fs-extra')
 const escapeStringRegexp = require('escape-string-regexp')
 const sander = require('sander')
-import i18n from 'browser/lib/i18n'
+// const i18n = require('browser/lib/i18n')
 
 const STORAGE_FOLDER_PLACEHOLDER = ':storage'
 const DESTINATION_FOLDER = 'attachments'
@@ -343,7 +343,7 @@ function cloneAttachments (oldNote, newNote) {
 }
 
 function generateFileNotFoundMarkdown () {
-  return '**' + i18n.__('⚠ You have pasted a link referring an attachment that could not be found in the storage location of this note. Pasting links referring attachments is only supported if the source and destination location is the same storage. Please Drag&Drop the attachment instead! ⚠') + '**'
+  return '**' + '⚠ You have pasted a link referring an attachment that could not be found in the storage location of this note. Pasting links referring attachments is only supported if the source and destination location is the same storage. Please Drag&Drop the attachment instead! ⚠' + '**'
 }
 
 /**

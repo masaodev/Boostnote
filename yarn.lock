@@ -4058,6 +4058,7 @@ filename-reserved-regex@^2.0.0:
 filenamify@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/filenamify/-/filenamify-2.1.0.tgz#88faf495fb1b47abfd612300002a16228c677ee9"
+  integrity sha512-ICw7NTT6RsDp2rnYKVd8Fu4cr6ITzGy3+u4vUujPkabyaz+03F24NWEX7fs5fp+kBonlaqPH8fAO2NM+SXt/JA==
   dependencies:
     filename-reserved-regex "^2.0.0"
     strip-outer "^1.0.0"

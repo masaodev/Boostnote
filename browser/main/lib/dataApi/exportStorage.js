@@ -1,6 +1,7 @@
 import { findStorage } from 'browser/lib/findStorage'
 import resolveStorageData from './resolveStorageData'
 import resolveStorageNotes from './resolveStorageNotes'
+import exportFolder from './exportFolder'
 import filenamify from 'filenamify'
 import * as path from 'path'
 import * as fs from 'fs'
@@ -33,7 +34,7 @@ function exportStorage (storageKey, fileType, exportDir) {
       resolveStorageNotes(storage).then(notes => ({storage, notes}))
     ))
     .then(function exportNotes (data) {
-      const { storage, notes } = data
+      const { storage } = data
       const folderNamesMapping = {}
       storage.folders.forEach(folder => {
         const folderExportedDir = path.join(exportDir, filenamify(folder.name, {replacement: '_'}))
@@ -42,15 +43,8 @@ function exportStorage (storageKey, fileType, exportDir) {
         try {
           fs.mkdirSync(folderExportedDir)
         } catch (e) {}
+        exportFolder(storageKey, folder.key, fileType, folderExportedDir)
       })
-      notes
-        .filter(note => !note.isTrashed && note.type === 'MARKDOWN_NOTE')
-        .forEach(markdownNote => {
-          const folderExportedDir = folderNamesMapping[markdownNote.folder]
-          const snippetName = `${filenamify(markdownNote.title, {replacement: '_'})}.${fileType}`
-          const notePath = path.join(folderExportedDir, snippetName)
-          fs.writeFileSync(notePath, markdownNote.content)
-        })
 
       return {
         storage,

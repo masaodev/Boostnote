@@ -1,10 +1,9 @@
 import copyFile from 'browser/main/lib/dataApi/copyFile'
 import { findStorage } from 'browser/lib/findStorage'
+import { getAbsolutePathsOfAttachmentsInContent, removeStorageAndNoteReferences, DESTINATION_FOLDER } from 'browser/main/lib/dataApi/attachmentManagement'
 
 const fs = require('fs')
 const path = require('path')
-
-const attachmentManagement = require('./attachmentManagement')
 
 /**
  * Export note together with attachments
@@ -26,18 +25,18 @@ function exportNote (nodeKey, storageKey, noteContent, targetPath, outputFormatt
   if (!storagePath) {
     throw new Error('Storage path is not found')
   }
-  const attachmentsAbsolutePaths = attachmentManagement.getAbsolutePathsOfAttachmentsInContent(
+  const attachmentsAbsolutePaths = getAbsolutePathsOfAttachmentsInContent(
     noteContent,
     storagePath
   )
   attachmentsAbsolutePaths.forEach(attachment => {
     exportTasks.push({
       src: attachment,
-      dst: attachmentManagement.DESTINATION_FOLDER
+      dst: DESTINATION_FOLDER
     })
   })
 
-  let exportedData = attachmentManagement.removeStorageAndNoteReferences(
+  let exportedData = removeStorageAndNoteReferences(
     noteContent,
     nodeKey
   )
