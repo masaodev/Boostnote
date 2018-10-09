@@ -53,6 +53,6 @@ test.afterEach.always(t => {
   sander.rimrafSync(t.context.exportDir)
 })
 
-function sleep(ms) {
+function sleep (ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
