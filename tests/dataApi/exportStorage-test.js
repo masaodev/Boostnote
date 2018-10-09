@@ -17,7 +17,7 @@ test.beforeEach(t => {
   t.context.storageDir = path.join(os.tmpdir(), 'test/export-storage')
   t.context.storage = TestDummy.dummyStorage(t.context.storageDir)
   t.context.exportDir = path.join(os.tmpdir(), 'test/export-storage-output')
-  try { fs.mkdirSync(t.context.exportDir) } catch (e) {}
+  try { fs.mkdirSync(t.context.exportDir) } catch (e) { }
   localStorage.setItem('storages', JSON.stringify([t.context.storage.cache]))
 })
 
@@ -31,18 +31,20 @@ test.serial('Export a storage', t => {
       acc[folder.key] = folder.name
       return acc
     }, {})
-  return exportStorage(storageKey, 'md', exportDir)
-    .then(() => {
-      notes.forEach(note => {
-        const noteDir = path.join(exportDir, folderKeyToName[note.folder], `${note.title}.md`)
-        if (note.type === 'MARKDOWN_NOTE') {
-          t.true(fs.existsSync(noteDir))
-          t.is(fs.readFileSync(noteDir, 'utf8'), note.content)
-        } else if (note.type === 'SNIPPET_NOTE') {
-          t.false(fs.existsSync(noteDir))
-        }
-      })
+  exportStorage(storageKey, 'md', exportDir).then(() => { console.log('Finished export') })
+
+  // Looks like export Storage could be a little delayed (not sure why, could even be filesystem related). That is the reason for the 5 seconds sleep.
+  return sleep(5000).then(() => {
+    notes.forEach(note => {
+      const noteDir = path.join(exportDir, folderKeyToName[note.folder], `${note.title}.md`)
+      if (note.type === 'MARKDOWN_NOTE') {
+        t.true(fs.existsSync(noteDir))
+        t.is(fs.readFileSync(noteDir, 'utf8'), note.content)
+      } else if (note.type === 'SNIPPET_NOTE') {
+        t.false(fs.existsSync(noteDir))
+      }
     })
+  })
 })
 
 test.afterEach.always(t => {
@@ -50,3 +52,7 @@ test.afterEach.always(t => {
   sander.rimrafSync(t.context.storageDir)
   sander.rimrafSync(t.context.exportDir)
 })
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
