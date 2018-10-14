@@ -16,9 +16,10 @@ const path = require('path')
  * @param {String} noteContent Content to export
  * @param {String} targetPath Path to exported file
  * @param {function} outputFormatter
+ * @param {function} noteLinkConverter
  * @return {Promise.<*[]>}
  */
-function exportNote (nodeKey, storageKey, noteContent, targetPath, outputFormatter) {
+function exportNote (nodeKey, storageKey, noteContent, targetPath, outputFormatter, noteLinkConverter) {
   const storagePath = path.isAbsolute(storageKey) ? storageKey : findStorage(storageKey).path
   const exportTasks = []
 
@@ -40,6 +41,10 @@ function exportNote (nodeKey, storageKey, noteContent, targetPath, outputFormatt
     noteContent,
     nodeKey
   )
+
+  if (noteLinkConverter) {
+    exportedData = noteLinkConverter(exportedData)
+  }
 
   if (outputFormatter) {
     exportedData = outputFormatter(exportedData, exportTasks)
