@@ -155,8 +155,7 @@ class MarkdownEditor extends React.Component {
 
       if (targetLine.match(checkedMatch)) {
         lines[lineIndex] = targetLine.replace(checkedMatch, '[ ]')
-      }
-      if (targetLine.match(uncheckedMatch)) {
+      } else if (targetLine.match(uncheckedMatch)) {
         lines[lineIndex] = targetLine.replace(uncheckedMatch, '[x]')
       }
       this.refs.code.setValue(lines.join('\n'))
